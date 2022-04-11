@@ -10,7 +10,7 @@ export interface INote extends Document {
     text_content: string;
     createdAt:string;
     category:string,
-    datesMentioned:string[],
+    mentionedDates:string[],
     isArchived:boolean,
     isCompleted:boolean
 }

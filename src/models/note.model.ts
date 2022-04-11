@@ -18,7 +18,7 @@ const noteSchema: Schema = new Schema({
     type:String,
     required:true
   },
-  datesMentioned:[String],
+  mentionedDates:[String],
   isArchived:{
     type:Boolean,
     default:false

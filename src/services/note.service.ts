@@ -5,23 +5,32 @@ import { LooseObject } from "../types/notes.type";
 
 export default class NoteService {
     async createNewNote(name:string, text_content:string, category:string) {
-        let datesMentioned = getMentionedDates(text_content)
-        return await NoteModel.create({name, text_content, datesMentioned, category})
+        let mentionedDates = getMentionedDates(text_content)
+        return await NoteModel.create({name, text_content, mentionedDates, category})
     }
     async deleteNote(note_id:string) {
         return await NoteModel.findOneAndDelete({_id:note_id})
     }
 
-    async updateNote(note_id:string, name:string, text_content:string, category:string) {
-        let datesMentioned = getMentionedDates(text_content)
-        return await NoteModel.findOneAndUpdate({_id:note_id},{name, text_content, datesMentioned, category},{
+    async updateNote(note_id:string, name:string, text_content:string, category:string, isCompleted:boolean) {
+        let mentionedDates = getMentionedDates(text_content)
+        return await NoteModel.findOneAndUpdate({_id:note_id},{name, text_content, mentionedDates, category, isCompleted},{
             new:true,
             runValidators:true,
             useFindAndModify:false
         })
     }
 
-    async findOneNote(note_id:string) {       
+    async updateNoteArchiveStatus(note_id:string) {
+        return await NoteModel.findById(note_id,(err:any, note:INote)=>{
+            if (note) {
+                note.isArchived = !note.isArchived
+                note.save()
+            }
+        })
+    }
+
+    async findOneNote(note_id:string) {    
         return await NoteModel.findOne({_id:note_id})
     }
 

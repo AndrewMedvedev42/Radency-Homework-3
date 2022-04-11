@@ -10,6 +10,7 @@ noteRouter.post(
     "/", 
     validateDto(bodyValidation),
     errorReceiver(noteController.createNote.bind(noteController)));
+    
 noteRouter.get("/stats", errorReceiver(noteController.getNotesStats.bind(noteController)));
 
 noteRouter.patch(
@@ -19,6 +20,11 @@ noteRouter.patch(
 
 noteRouter.delete("/:id", errorReceiver(noteController.deleteNote.bind(noteController)));
 noteRouter.get("/:id", errorReceiver(noteController.findOneNote.bind(noteController)));
+
+noteRouter.patch(
+    "/archive/:id", 
+    errorReceiver(noteController.updateNoteArchiveStatus.bind(noteController)));
+
 noteRouter.get("/", errorReceiver(noteController.getAllNotes.bind(noteController)));
 
 export default noteRouter;

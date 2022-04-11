@@ -12,13 +12,18 @@ export class NoteController {
 
     async deleteNote(req: Request) {
         const {id} = req.params
-        return await this.noteService.deleteNote(id);
+        await this.noteService.deleteNote(id);
     }
 
     async updateNote(req: Request) {
         const {id} = req.params
-        const {name, text_content, category} = req.body
-        return await this.noteService.updateNote(id, name, text_content, category);
+        const {name, text_content, category, isCompleted} = req.body
+        await this.noteService.updateNote(id, name, text_content, category, isCompleted);
+    }
+
+    async updateNoteArchiveStatus(req: Request) {
+        const {id} = req.params
+        await this.noteService.updateNoteArchiveStatus(id);
     }
 
     async findOneNote(req: Request) {
